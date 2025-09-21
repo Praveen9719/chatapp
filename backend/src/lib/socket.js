@@ -7,7 +7,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin:["https://chatapp-frontend-nwib.onrender.com"],                                  //["http://localhost:5173"],             // Update this to your backend URL
+    origin:["https://chatapp-backend-x0w0.onrender.com"],                                  //["http://localhost:5173"],             // Update this to your backend URL
   },
 });
 
