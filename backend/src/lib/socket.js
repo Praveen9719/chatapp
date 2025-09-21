@@ -1,4 +1,3 @@
-// ✅ backend/src/lib/socket.js
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
@@ -8,20 +7,16 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: [
-      "http://localhost:5173",                    // ✅ Development
-      "https://chatapp-frontend-nwib.onrender.com"// ✅ Production  //["http://localhost:5173"],             // Update this to your frontend URL
-  
-    ],
-    credentials: true
+    origin:["https://chatapp-backend-x0w0.onrender.com"],      //      ["http://localhost:5173"],
   },
 });
-
-const userSocketMap = {}; // { userId: socketId }
 
 export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
+
+// used to store online users
+const userSocketMap = {}; // {userId: socketId}
 
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
@@ -29,6 +24,7 @@ io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
   if (userId) userSocketMap[userId] = socket.id;
 
+  // io.emit() is used to send events to all the connected clients
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
@@ -39,6 +35,3 @@ io.on("connection", (socket) => {
 });
 
 export { io, app, server };
-
-                                   
-   
